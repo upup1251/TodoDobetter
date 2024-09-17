@@ -1,0 +1,20 @@
+<!--pages/mine/mine.wxml-->
+
+<view id="avatarView">
+<image id="avatar" src="{{avatarPath}}" mode="scaleToFill"/>
+</view>
+
+
+
+<view id="informationView">
+  <text>欢迎回家，{{name}}</text>
+</view>
+
+
+<view  id="lastPercantageView">
+<text>
+  {{lastPercentage}}%
+</text>
+
+</view>
+

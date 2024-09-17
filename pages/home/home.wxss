@@ -1,0 +1,95 @@
+#scrollView{
+  background-color: #ff751a;
+  white-space: nowrap;
+  height: 125rpx;
+  width: 100%;
+
+
+
+}
+#viewItem{
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+
+
+}
+
+#viewItem text{
+  width: 750rpx;
+  line-height: 125rpx;
+  
+  text-overflow: ellipsis;
+  text-align: center;
+  color: white;
+
+
+}
+
+
+#buttonDel{
+  height: 125rpx;
+  line-height: 125rpx;
+  background-color: #ff751a;
+  color: red;
+  margin-left: 10rpx;
+}
+#buttonRestore{
+  height: 125rpx;
+  line-height: 125rpx;
+  background-color: #ff751a;
+  color: #07c160;
+}
+
+/* #rebbitIcon {
+  display: inline-block;
+  position: relative;
+  width: 10rpx;
+  height: 10rpx;
+}
+
+#huluoboIcon {
+  position: relative;
+  display: inline-block;
+  width: 10rpx;
+  height: 10rpx;
+} */
+
+#viewAdd{
+  width: 710rpx;
+  text-align: center;
+  line-height: 50rpx;
+  height: 50rpx;
+  padding: 20rpx;
+  color: #ff751a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#addTodo {
+  color: white;
+  font-weight: bold;
+  width: 750rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-color: #ff751a;
+  border-width: 100px;
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+

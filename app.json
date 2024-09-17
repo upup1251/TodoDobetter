@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/mine/mine",
+    "pages/index/index",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Tododo",
+    "navigationBarBackgroundColor": "#07c160"
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "HOME",
+        "iconPath": "images/TODO.png",
+        "selectedIconPath": "images/TODOSelectedIcon.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "ME",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/meSelectedIcon.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
