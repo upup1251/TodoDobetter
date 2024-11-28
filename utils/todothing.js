@@ -10,7 +10,6 @@ class todo{
       this.id = id1;
       this.done = new Array(31).fill(1)
       let today = new Date().getDate()-1
-      console.log(today)
       for(let i=0;i<today;i++){
         this.done[i] = 0
       }

@@ -47,6 +47,15 @@ App({
       const lastDay = wx.getStorageSync('lastDay')
       if(lastDay){
         const currentDate = new Date().toDateString()
+        //如果不是同一个月
+        if(new Date(lastDay).getMonth() != new Date().getMonth()){
+          for(let item of this.globalData.allTodo){
+            for(let i=0;i<31;i++){
+              item.done[i] = 1
+            }
+          }
+        }
+        
         console.log("last login:"+lastDay)
         console.log("current time:"+currentDate)
         if(currentDate!=lastDay){
