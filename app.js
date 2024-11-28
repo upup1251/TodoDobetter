@@ -4,114 +4,96 @@ const { formatTime } = require("./utils/util")
 // app.js
 App({
   onLaunch() {
-
-    const storedUserInfor = wx.getStorageSync('userInfo');
-    if(!storedUserInfor){
-      wx.showModal({
-        title: '获取权限',
-        content: '将访问你的头像和昵称用于个人信息展示',
-        complete: (res) => {
-          if (res.cancel) {
-            
-          }
-      
-          if (res.confirm) {
-            this.getUserProfile()
-          }
-        }
-      })
-
-    }
-
-
-
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-
-   
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    console.log("onLaunch()")
+    try{
+      console.log("================================================")
+      console.log("app_onlaunch: try to load data from local...")
+      var userInfo = wx.getStorageSync('userInfo')
+      console.log(userInfo)
+      if(userInfo){
+        this.globalData.userInfo = userInfo
+        this.globalData.allTodo = wx.getStorageSync('todos')
+        console.log(this.globalData.userInfo)
+        console.log(this.globalData.allTodo)
       }
-    })
+      else{
+        console.log("app_onLaunch: no local storage for userInfo or todos,add instructions todos automatically")
+        this.globalData.userInfo = {
+            avatarUrl : "../../images/avatar.png",
+            nickName:"微信用户2020",
+        }
+        this.globalData.allTodo = [
+          new todo("欢迎来到Todod小程序",0),
+          new todo("右滑完成今日打卡",1),
+          new todo("左滑执行各种操作",2),
+          new todo("添加todo请在下方右滑",3),
+          new todo("程序中绿色代表完成，红色代表未完成",4),
+          new todo("希望玩的开心！",5)
+        ]
+      }
+      console.log("================================================")
+    }
+    
+    catch(e){
+      console.error("app_onLaunch: ")
+
+    } 
   },
 
   onShow(){
-    const currentDate = new Date().toDateString()
-    const lastDay = wx.getStorageSync('lastDay')
-    this.globalData.allTodo = wx.getStorageSync('todos')||[]
-
-    console.log("-------load local Data-------")
-    console.log(lastDay)
-    console.log(this.globalData.allTodo)
-    console.log("-------load finish-----------")
-
-    console.log(currentDate)
-
-    if(currentDate!=lastDay){
-      console.log("new day")
-      this.globalData.lastStatus=[0,0,0]
-      for(var i=0;i<this.globalData.allTodo.length;i++){
-        if(this.globalData.allTodo[i].status==0){
-          this.globalData.lastStatus[0]++
+    console.log("app_onShow()")
+    try{
+      //每次onShow()时获取上一次登陆是否和现在是同一天，判断是否需要刷新完成情况
+      const lastDay = wx.getStorageSync('lastDay')
+      if(lastDay){
+        const currentDate = new Date().toDateString()
+        console.log("last login:"+lastDay)
+        console.log("current time:"+currentDate)
+        if(currentDate!=lastDay){
+          console.log("newDay,clear yeaterday message(2->1)")
+          for(var item of this.globalData.allTodo){
+            if(item.status ==2){
+              item.status=1
+            }
+          }
+          console.log(this.globalData.allTodo)
         }
-        else if(this.globalData.allTodo[i].status==1){
-          this.globalData.lastStatus[1]++
-        }
-        else if(this.globalData.allTodo[i].status==2){
-          this.globalData.lastStatus[2]++
-          this.globalData.allTodo[i].status=1
-        }
-        console.log('delTodo unTodo okTodo:'+this.globalData.lastStatus[0]+" " +this.globalData.lastStatus[1]+" "+this.globalData.lastStatus[2])
-        if(this.globalData.lastStatus[1]+this.globalData.lastStatus[2]==0){
-          this.globalData.lastPercentage=100
+        else{
+          console.log("still today")
         }
       }
-    }
-    else{
-      console.log(lastDay)
+    }catch(e){
+      console.log("获取数据失败",e)
     }
   },
 
-  OnHide(){
-    wx.setStorageSync('todos', this.globalData.allTodo)
-    wx.setStorageSync('lastDay', new Date().toDateString())
+  onHide(){
+    try{
+      console.log("================================================")
+      console.log("app_onHide(): automatically store this info：")
+      console.log(this.globalData.allTodo)
+      console.log(new Date().toDateString())
+      console.log(this.globalData.userInfo)
+      console.log("================================================")
+
+      wx.setStorageSync('todos', this.globalData.allTodo)
+      wx.setStorageSync('lastDay', new Date().toDateString())
+      wx.setStorageSync('userInfo', this.globalData.userInfo)
+    }catch(e){
+      console.error("数据保存失败",e)
+    }
   },
 
 
 
   globalData: {
-    userInfo: null ,
+    userInfo:null,
     mainColor:"ff751a",
-    allTodo :[
-      // new todo("吃饭"),
-      // new todo("睡觉")
-    ],
-    lastLoad:{},
-    lastStatus:[],
+    allTodo :[],
+    lastLoad:null,
+    lastStatus:null,
     lastPercentage:0
   },
-
-
-
-  getUserProfile() {
-    wx.getUserProfile({
-      desc: '用于展示用户头像和昵称',    // 说明获取用户信息的目的
-      success:(res) => {
-        console.log("成功获取用户信息",res.userInfo);
-        // wx.setStorageSync(this.globalData.userInfo,res.userInfo);
-        this.globalData.userInfo = res.userInfo;    //app中的globaldata不用使用函数setData()
-      },
-      fail:(res)=>{
-        console.log("获取用户信息失败")
-      }
-    })
-  }
 })
 
 

@@ -1,31 +1,89 @@
 /* pages/mine/mine.wxss */
-#avatarView {
-  display: flex;                /* 启用 flex 布局 */
-  justify-content: center;       /* 水平居中 */
-  
 
-
+#view1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+#changeAvatarButton{
+  background-color: white;
+}
+
+
 #avatar {
-  width: 300rpx;
-  height: 300rpx;
-  border-radius: 50%;
+  width: 250rpx;
+  height: 250rpx;
   margin: 50rpx;
+  border-radius: 50%;
 }
 
 #informationView {
-  display: flex;
-  justify-content: center;
+  flex: 5;
+  margin-left: 40rpx;
+  color: #ff751a;
+  font-weight: bold;
+  font-size: 50rpx;
 }
 
 
-#lastPercantageView{
-  padding-top: 650rpx;
-  width: 100%;
+#DoneList {
+  border-width: 1rpx;
+  border-style: solid;
+  border-radius: 30rpx;
+  border-color: #07c160;
+
+  margin: 50rpx;
+}
+
+#DoneTitle {
+  margin-top: 10rpx;
+  padding-top: 60rpx;
   text-align: center;
 
+  font-weight: bold;
+  font-size: 40rpx;
+
+}
+
+#overView {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 50rpx;
+  margin-top: 40rpx;
+}
+
+.todo {
+  color: white;
+  margin: 8rpx;
+  padding: 7rpx;
+  border-radius: 50%;
+  text-align: center;
+  width: 50rpx;
+}
+
+.todo1 {
+  background: #ff751a;
+}
+
+.todo2 {
+  background: #07c160;
+}
+
+#lookup {
+  padding-left: 80rpx;
+}
+
+#lookupHead{
+  margin-bottom: 20rpx;
+
+  font-weight: bold;
+  font-size: 35rpx;
+}
 
 
-  
-
+#closelookup {
+  margin-top: 20rpx;
+  margin-bottom: 100rpx;
+  background-color: white;
 }

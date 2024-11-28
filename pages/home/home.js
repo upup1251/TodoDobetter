@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    todos : [{}],
+    todos : [],
     inputNewTodoDisappear : true,
     app :{},
     startX:0,
@@ -15,6 +15,13 @@ Page({
 
     scrollLeft:[],
     buttonDelDisplay:false,
+    overViewDisplay:false,
+
+    done:[],
+    days:-1,
+    months:0,
+
+    currentId:-1,
 
   },
 
@@ -23,7 +30,6 @@ Page({
       startX:e.touches[0].pageX,
       startY:e.touches[0].pageY
     })
-
   },
   onTouchMove(e){
   },
@@ -41,14 +47,35 @@ Page({
         for(var i=0;i<this.data.todos.length;i++){
           if(newTodos[i].id==id){
             newTodos[i].status=2
+            newTodos[i].done[new Date().getDate()-1]=2
             break
           }
         }
         this.setData({
-          todos:newTodos
+          todos:newTodos,
+          currentId:id,
         })
         app.globalData.allTodo = newTodos
-        console.log(id+'complete')
+        let notdone = 0;
+        for(let i=0;i<this.data.todos.length;i++){
+          if(this.data.todos[i].status == 1){
+            notdone = notdone + 1
+            break
+          }
+        }
+        if(notdone == 0){
+          wx.setNavigationBarColor({
+            backgroundColor: '#ff751a',
+            frontColor: '#ffffff', 
+
+          })
+        }
+
+        console.log(app.globalData.allTodo)
+
+
+
+        console.log(id+' complete')
         wx.showToast({
           title: this.data.todos[id].text +" 打卡成功",
         })
@@ -60,7 +87,7 @@ Page({
           buttonDelDisplay:true
         })
         var newScrollLeft = this.data.scrollLeft;
-        newScrollLeft[id] = 1000;
+        newScrollLeft[id] = 200;
         this.setData({
           scrollLeft:newScrollLeft
         })
@@ -102,26 +129,6 @@ Page({
       }
     },
 
-//不稳定的回弹
-  // onScroll(e) {
-  //   const currentScrollLength = e.detail.scrollLeft;
-  //   const target_id = e.currentTarget.dataset.id;
-  //   var scrollLeft1 = this.data.scrollLeft;
-  //   if(currentScrollLength!=0){
-  //     scrollLeft1[target_id] = 200;
-  //     this.setData({
-  //       scrollLeft:scrollLeft1
-  //     })
-  //     setTimeout(()=>{
-  //       scrollLeft1[target_id] = 0
-  //       this.setData({
-  //         scrollLeft :scrollLeft1
-  //       })
-  //     },2000)
-  //   } 
-
-  // },
-
 
 
   addNewTodo(){
@@ -135,11 +142,19 @@ Page({
       confirmColor:'07c160',
       success:  (res)=> {
         if (res.confirm) {
-          var currentTodos = this.data.todos
+          var currentTodos = this.data.todos || []
           if(res.content!=''){
-            currentTodos.push(new todo(res.content))
+            currentTodos.push(new todo(res.content,getApp().globalData.allTodo.length))
           this.setData({
             todos:currentTodos
+          })
+          //将数据保存到全局
+          var app = getApp()
+          app.globalData.allTodo = currentTodos
+          wx.setNavigationBarColor({
+            backgroundColor: '#07c160',
+            frontColor: '#ffffff', 
+
           })
           console.log('用户点击确定，输入的内容为：', res.content);
           }
@@ -171,8 +186,26 @@ Page({
           const app = getApp()
           const newTodos = this.data.todos
           for(var i=0;i<newTodos.length;i++){
-            if (newTodos[i].id == id){
+            if (newTodos[i].id == id){                
+
               newTodos[i].status = 0
+              newTodos[i].done[new Date().getDate()-1]=0
+
+              let notdone = 0;
+                for(let i=0;i<this.data.todos.length;i++){
+                  if(this.data.todos[i].status == 1){
+                    notdone = notdone + 1
+                    break
+                  }
+                }
+                if(notdone == 0){
+                  wx.setNavigationBarColor({
+                    backgroundColor: '#ff751a',
+                    frontColor: '#ffffff', 
+        
+                  })
+              }
+
               this.setData({
                 todos:newTodos,
               })
@@ -203,11 +236,16 @@ Page({
           for(var i=0;i<this.data.todos.length;i++){
             if(this.data.todos[i].id==id){
               currentTods[i].status=1
+              currentTods[i].done[new Date().getDate()-1]=1
               break
             }
           }
           this.setData({
-            todos:currentTods
+            todos:currentTods,
+          })
+          wx.setNavigationBarColor({
+            backgroundColor: '#07c160',
+            frontColor: '#ffffff', 
           })
           wx.showToast({
             title: '恢复成功',
@@ -216,10 +254,22 @@ Page({
       }
     })
   },
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log("home onload()")
+    let today =   new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth()+1;
+    let nextMonth = new Date(year,month,1)
+    let lastDayOfCurrentMonth = new Date(nextMonth-1)
+    this.setData({
+      days:lastDayOfCurrentMonth.getDate(),
+      months:month
+    })
+
     const app1 = getApp();
     this.setData({        //加载页面的时候获得app实例和tosdoList
       app : app1,
@@ -228,9 +278,22 @@ Page({
     for(var i=0;i<this.data.todos.length;i++){
       this.data.scrollLeft[i]=0;
     }
- 
+  },
+  
+  closeDoneView(){
+    this.setData({
+      overViewDisplay:false,
+      dayCount:0
+    })
+  },
 
-
+  DoneDisplay(e){
+    const id = e.currentTarget.dataset.id
+    this.setData({
+      currentId:id,
+      overViewDisplay:true,
+      done:this.data.todos[id].done
+    })
   },
 
   /**
@@ -244,6 +307,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    this.setData({
+      todos:getApp().globalData.allTodo
+    })
 
   },
 
@@ -280,5 +346,13 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  // display(){
+  //   console.log("home:")
+  //   console.log(this.data.todos)
+
+  //   console.log("app:")
+  //   console.log(getApp().globalData.allTodo)
+  // }
 })

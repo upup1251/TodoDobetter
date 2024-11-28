@@ -1,5 +1,18 @@
-#scrollView{
+#all {
+
+
+
+}
+
+#itemall {
+  margin: 10rpx;
+  border-radius: 3% ;
   background-color: #ff751a;
+
+
+
+}
+#scrollView{
   white-space: nowrap;
   height: 125rpx;
   width: 100%;
@@ -12,11 +25,13 @@
   align-items: center;
   overflow: hidden;
 
+  
+
 
 }
 
 #viewItem text{
-  width: 750rpx;
+  width: 735rpx;
   line-height: 125rpx;
   
   text-overflow: ellipsis;
@@ -41,19 +56,13 @@
   color: #07c160;
 }
 
-/* #rebbitIcon {
-  display: inline-block;
-  position: relative;
-  width: 10rpx;
-  height: 10rpx;
+#buttonDone{
+  height: 125rpx;
+  line-height: 125rpx;
+  background-color: #ff751a;
+  color: #07c160;
 }
 
-#huluoboIcon {
-  position: relative;
-  display: inline-block;
-  width: 10rpx;
-  height: 10rpx;
-} */
 
 #viewAdd{
   width: 710rpx;
@@ -63,6 +72,74 @@
   padding: 20rpx;
   color: #ff751a;
 }
+
+
+
+#view2{
+  position: fixed;
+
+  left: 80rpx;
+  right: 80rpx;
+  top: 150px;
+  background: #ff751a;
+  border-style: solid;
+  border-radius: 20rpx;
+
+  border-width: 1rpx;
+  border-color: #07c160;
+
+  padding: 40rpx;
+
+
+
+}
+
+#Donetitle{
+  color: white;
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+#overView{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+
+#todoDoneView{
+
+}
+
+.todo{
+  color: white;
+  margin: 8rpx;
+  padding: 7rpx;
+  border-radius: 50%;
+  text-align: center;
+}
+.todo0{
+  background: #e0e0e0e0;
+  
+}
+.todo1{
+  background: #ff751a;
+}.todo2{
+  background: #07c160;
+}
+
+#viewcloseDoneButton{
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: flex-end;
+
+
+}
+
+#closeDoneButton{
+  color: white;
+  background: #ff751a;
+}
+
 
 
 

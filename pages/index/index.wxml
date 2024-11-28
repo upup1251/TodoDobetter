@@ -20,6 +20,12 @@
         <text class="userinfo-nickname">{{userInfo.nickName}}</text>
       </block>
     </view>
+    
+    <view id="togo" bind:touchstart="addOnTouchStart" bind:touchmove="addOnTouchMove" bind:touchend="addOnTouchEnd">
+      <text style="color:#07c160 ;font-weight: bold;text-align: center;display: block;">>>滑动开始新生活>></text>
+    </view>
+
+
     <view class="usermotto">
       <text class="user-motto">{{motto}}</text>
     </view>

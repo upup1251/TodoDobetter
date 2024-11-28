@@ -1,20 +1,62 @@
 <!--pages/mine/mine.wxml-->
 
-<view id="avatarView">
-<image id="avatar" src="{{avatarPath}}" mode="scaleToFill"/>
+<view>
+
+  <view id="view1">
+    <image id="avatar" src="{{userInfo.avatarUrl}}" mode="scaleToFill" bind:tap="changeAvatar"/>
+
+    <view id="informationView" bind:tap="changeName">
+      <text>{{userInfo.nickName}}</text>
+    </view>
+
+  </view>
+
+
+  <view id="DoneList">
+
+    <view id="DoneTitle">
+      {{months}}月TODO完成情况
+    </view>
+
+
+    <view id="overView">
+      <view wx:for="{{everydayDone}}" wx:key="index" data-id="{{index}}" bind:tap="lookup">
+        <view class="todo1 todo" wx:if="{{item==1 && index<days}}">
+          {{index+1}}
+        </view>
+        <view class="todo2 todo" wx:if="{{item==2 && index<days}}">
+          {{index+1}}
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+
+
+
+  <view id="lookup" wx:if="{{lookupOn}}">
+  <view id="lookupHead">
+  本月第{{lookupday+1}}天TODO事项完成情况如下：
+  </view>
+
+    <view wx:for="{{todos}}" wx:key="index">
+      <view class="lookup_1" wx:if="{{item.done[lookupday]==1}}" style="color: #ff751a;">
+       ❌ {{item.text}}
+      </view>
+
+      <view class="lookup_2" wx:if="{{item.done[lookupday]==2}}" style="color:#07c160;">
+        ✅ {{item.text}}
+      </view>
+    </view>
+
+    <button id="closelookup" size="mini" bind:tap="closelookup">
+      关闭
+    </button>
+
+
+  </view>
+
+
+
 </view>
-
-
-
-<view id="informationView">
-  <text>欢迎回家，{{name}}</text>
-</view>
-
-
-<view  id="lastPercantageView">
-<text>
-  {{lastPercentage}}%
-</text>
-
-</view>
-

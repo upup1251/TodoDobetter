@@ -3,6 +3,7 @@ page {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #ff751a;
 }
 .scrollarea {
   flex: 1;
@@ -13,7 +14,7 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #aaa;
+  color:white;
   width: 80%;
 }
 
@@ -23,6 +24,8 @@ page {
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
+
+
 }
 
 .usermotto {
@@ -41,6 +44,8 @@ page {
   display: block;
   width: 56px;
   height: 56px;
+
+
 }
 
 .nickname-wrapper {
@@ -50,7 +55,10 @@ page {
   box-sizing: border-box;
   border-top: .5px solid rgba(0, 0, 0, 0.1);
   border-bottom: .5px solid rgba(0, 0, 0, 0.1);
-  color: black;
+  color: white;
+
+
+  margin-top: 100rpx;
 }
 
 .nickname-label {
@@ -59,4 +67,10 @@ page {
 
 .nickname-input {
   flex: 1;
+}
+
+
+#togo{
+  display: block;
+  margin-top: 500rpx;
 }

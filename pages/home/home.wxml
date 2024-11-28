@@ -1,38 +1,95 @@
-<scroll-view id="scrollView" data-id="{{item.id}}"  scroll-left="{{scrollLeft[item.id]}}"   scroll-with-animation="true" 
- bind:touchstart="onTouchStart" bind:touchmove="onTouchMove" bind:touchend="onTouchEnd" scroll-x="true" wx:for="{{todos}}" wx:key="id" wx:if="{{item.status!=0}}">
-  <view id="viewItem">
+<view id='all'>
 
-  <text wx:if="{{item.status==1}}"  style="background-color: #ff751a;">{{item.text}}</text>
-  <text wx:if="{{item.status==2}}" style="background-color: #07c160;">{{item.text}}</text>
+  <view id="itemall" wx:for="{{todos}}" wx:key="id" wx:if="{{item.status!=0}}">
+    <scroll-view id="scrollView" data-id="{{item.id}}" scroll-left="{{scrollLeft[item.id]}}" scroll-with-animation="true" bind:touchstart="onTouchStart" bind:touchmove="onTouchMove" bind:touchend="onTouchEnd" scroll-x="true">
+      <view id="viewItem">
 
-  <!-- <image id="rabbitIcon" src="../../images/rabbit.png" mode=""/>
+        <text wx:if="{{item.status==1}}" style="background-color: #ff751a; border-radius: 3%;">{{item.text}}</text>
+        <text wx:if="{{item.status==2}}" style="background-color: #07c160;border-radius: 3%;">{{item.text}}</text>
+
+        <!-- <image id="rabbitIcon" src="../../images/rabbit.png" mode=""/>
   <image id="huluoboIcon" src="../../images/huluobo.png" mode=""/> -->
-  <button id="buttonRestore" size="mini" data-id="{{item.id}}" bind:tap="restoreTodo" wx:if="{{buttonDelDisplay && item.status==2}}" >
-      恢复
-  </button>
+        <button id="buttonRestore" size="mini" data-id="{{item.id}}" bind:tap="restoreTodo" wx:if="{{buttonDelDisplay && item.status==2}}">
+          恢复
+        </button>
 
-    <button id="buttonDel" size="mini" data-id="{{item.id}}" bind:tap="delTodo" wx:if="{{buttonDelDisplay}}" >
-      删除
-    </button>
+        <button id="buttonDone" size="mini" data-id="{{item.id}}" bind:tap="DoneDisplay" wx:if="{{buttonDelDisplay}}">
+          查看
+        </button>
+
+        <button id="buttonDel" size="mini" data-id="{{item.id}}" bind:tap="delTodo" wx:if="{{buttonDelDisplay}}">
+          删除
+        </button>
+      </view>
+    </scroll-view>
   </view>
-</scroll-view>
 
 
-<view id="viewAdd" bind:touchstart="addOnTouchStart" bind:touchmove="addOnTouchMove" bind:touchend="addOnTouchEnd"> 
->>> 添加新的TODO事件 >>>
+  <view id="viewAdd" bind:touchstart="addOnTouchStart" bind:touchmove="addOnTouchMove" bind:touchend="addOnTouchEnd">
+    >>> 添加新的TODO事件 >>>
+  </view>
+
+
+
+
+  <view id="view2" wx:if="{{overViewDisplay}}">
+
+    <view id="Donetitle">
+      {{todos[currentId].text}} の{{months}}月完成情况
+    </view>
+
+
+    <view id="overView">
+
+
+      <view id="todoDoneView" wx:for="{{done}}" wx:key="index">
+
+        <view class="todo0 todo" wx:if="{{item==0 && index<days}}">
+          {{index+1}}
+        </view>
+
+        <view class="todo1 todo" wx:if="{{item==1 && index<days}}">
+          {{index+1}}
+        </view>
+
+        <view class="todo2 todo" wx:if="{{item==2 && index<days}}">
+          {{index+1}}
+        </view>
+
+
+      </view>
+
+    </view>
+
+
+    <view id="viewcloseDoneButton">
+
+      <button id="closeDoneButton" size="mini" bind:tap="closeDoneView">
+        关闭
+      </button>
+
+    </view>
+
+
+  </view>
+
+
+
+
+  <!-- 
+<view doneView>
+  <view wx:for="">
+  
+  </view>
+
+</view> -->
+
+
+  <!-- 
+<button id="display" bind:tap="display">
+  查看
+</button> -->
+
+
+
 </view>
-
-
-<!-- <button id="buttonAdd">添加新的TODO</button> -->
-
-
-
-
-
-
-<!-- <scroll-view scroll-x="true" style="white-space: nowrap; height: 100rpx; width: 100%;">
-  <view style="display: inline-flex; align-items: center; white-space: nowrap;">
-    <view style="line-height: 100rpx; white-space: nowrap;width: 750rpx;">很长的文很长的文本内容</view>
-    <button style="margin-left: 10rpx;">按钮</button>
-  </view>
-</scroll-view> -->
